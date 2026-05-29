@@ -1,0 +1,8 @@
+{
+  "appName": "MasterTool Staging",
+  "baseUrl": "https://staging-api.example.com",
+  "sentryDsn": "",
+  "firebaseProjectId": "mastertool-staging",
+  "enableLogging": true,
+  "enableCrashReporting": true
+}

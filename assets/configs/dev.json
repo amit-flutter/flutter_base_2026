@@ -1,0 +1,8 @@
+{
+  "appName": "MasterTool Dev",
+  "baseUrl": "https://dev-api.example.com",
+  "sentryDsn": "",
+  "firebaseProjectId": "mastertool-dev",
+  "enableLogging": true,
+  "enableCrashReporting": false
+}

@@ -1,0 +1,8 @@
+{
+  "appName": "MasterTool",
+  "baseUrl": "https://api.example.com",
+  "sentryDsn": "",
+  "firebaseProjectId": "mastertool-prod",
+  "enableLogging": false,
+  "enableCrashReporting": true
+}
