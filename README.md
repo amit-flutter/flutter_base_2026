@@ -1,4 +1,4 @@
-# MasterTool — Flutter Production Base
+# NextGen Tools — Flutter Production Base
 
 A production-grade Flutter project template with pre-built standards, AI agents, reusable core modules, build/deploy tooling, and feature scaffolding.
 
@@ -40,7 +40,7 @@ dart run tool/build.dart --flavor dev --mode run
 
 ```
 Your Workspace/
-├── mastertool/           ← cloned once, never delete
+├── next_gen_tools/       ← cloned once, never delete
 │   ├── lib/core/         ← reusable widgets, theme, network, utils...
 │   ├── tool/             ← build & scaffold tools
 │   └── AGENTS.md, STANDARDS.md, analysis_options.yaml
@@ -86,7 +86,7 @@ Your Workspace/
 | **Router** | `app_router.dart` | go_router with ShellRoute, 404, auth routes |
 | **Bootstrap** | `bootstrap.dart`, `app.dart` | Async init, MaterialApp.router wiring |
 
-**Barrel:** `import 'package:mastertool/core/core.dart';` — single import for everything
+**Barrel:** `import 'package:next_gen_tools/core/core.dart';` — single import for everything
 
 ### 4. Pre-loaded Packages (`pubspec.yaml`)
 28 dependencies with pinned exact versions:
@@ -95,8 +95,7 @@ Your Workspace/
 - Navigation: `go_router`
 - Storage: `shared_preferences`, `flutter_secure_storage`, `path_provider`
 - UI: `cached_network_image`, `shimmer`, `flutter_svg`, `lottie`
-- Firebase: `core`, `crashlytics`, `analytics`, `messaging`, `remote_config`
-- Monitoring: `sentry_flutter`
+- Firebase: `core`, `crashlytics`, `analytics`
 - Device: `package_info_plus`, `device_info_plus`, `permission_handler`, `url_launcher`, `share_plus`, `local_auth`, `image_picker`
 - Utils: `intl`
 - Dev: `build_runner`, `freezed`, `json_serializable`, `riverpod_generator`, `mocktail`

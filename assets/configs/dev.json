@@ -1,8 +1,8 @@
 {
-  "appName": "MasterTool Dev",
+  "appName": "NextGen Tools Dev",
   "baseUrl": "https://dev-api.example.com",
   "sentryDsn": "",
-  "firebaseProjectId": "mastertool-dev",
+  "firebaseProjectId": "next-gen-tools",
   "enableLogging": true,
   "enableCrashReporting": false
 }

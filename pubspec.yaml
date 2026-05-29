@@ -1,5 +1,5 @@
-name: mastertool
-description: "A new Flutter project."
+name: next_gen_tools
+description: "NextGen Tools - Flutter production base"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -40,11 +40,6 @@ dependencies:
   firebase_core: 4.9.0
   firebase_crashlytics: 5.2.2
   firebase_analytics: 12.4.1
-  firebase_messaging: 16.2.2
-  firebase_remote_config: 6.5.1
-
-  # Monitoring
-  sentry_flutter: 8.14.2
 
   # Device
   package_info_plus: 10.1.0

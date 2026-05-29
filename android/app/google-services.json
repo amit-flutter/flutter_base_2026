@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "779418651842",
+    "project_id": "next-gen-tools",
+    "storage_bucket": "next-gen-tools.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779418651842:android:a95613d9bb3830c9ab7f5b",
+        "android_client_info": {
+          "package_name": "com.example.mastertool"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhdkcCTsY0bgZ0uNu5MFSVEF-rLP4MGr8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

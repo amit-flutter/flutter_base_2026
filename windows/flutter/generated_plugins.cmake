@@ -6,11 +6,9 @@ list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
   file_selector_windows
   firebase_core
-  firebase_remote_config
   flutter_secure_storage_windows
   local_auth_windows
   permission_handler_windows
-  sentry_flutter
   share_plus
   url_launcher_windows
 )

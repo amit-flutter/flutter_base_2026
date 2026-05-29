@@ -37,6 +37,7 @@ class _CliOptions {
     this.analyzeFirst = false,
     this.updateBuildInfo = true,
     this.buildNumber,
+    this.previewChannel,
   });
 
   final String flavorName;
@@ -48,6 +49,7 @@ class _CliOptions {
   final bool analyzeFirst;
   final bool updateBuildInfo;
   final String? buildNumber;
+  final String? previewChannel;
 
   static _CliOptions parse(List<String> args) {
     var flavorName = BuildConfig.defaultFlavor;
@@ -57,6 +59,7 @@ class _CliOptions {
     var analyzeFirst = false;
     var updateBuildInfo = true;
     String? buildNumber;
+    String? previewChannel;
     final targets = <String>[];
     final modes = <String>[];
 
@@ -75,6 +78,7 @@ class _CliOptions {
         deploy = true;
       } else if (lower == '--parallel' || lower == '-p') {
         parallel = true;
+      } else if (lower == '--preview') {
       } else if (lower == '--analyze' || lower == '--test') {
         modes.add(lower.replaceAll('--', ''));
       } else if (lower == '--no-build-info') {
@@ -115,6 +119,9 @@ class _CliOptions {
       if (args[i] == '--mode' && i + 1 < args.length) {
         modes.add(args[i + 1]);
       }
+      if (args[i] == '--preview' && i + 1 < args.length) {
+        previewChannel = args[i + 1];
+      }
       if (args[i] == '--build-number' && i + 1 < args.length) {
         buildNumber = args[i + 1];
       }
@@ -143,6 +150,7 @@ class _CliOptions {
       analyzeFirst: analyzeFirst,
       updateBuildInfo: updateBuildInfo,
       buildNumber: buildNumber,
+      previewChannel: previewChannel,
     );
   }
 }
@@ -277,7 +285,7 @@ class BuildRunner {
   Future<void> _buildWeb(String mode) async {
     await _runCmd('flutter', [
       'build', 'web',
-      ..._baseArgs,
+      ..._flavor.dartDefineArgs,
       '--pwa-strategy=none',
       '--source-maps',
     ], label: 'Building Web');
@@ -292,11 +300,20 @@ class BuildRunner {
       _log('⚠️  No Firebase project configured for flavor ${_flavor.name}');
       return;
     }
-    await _runCmd('firebase', [
-      'deploy',
-      '--only', 'hosting:${_flavor.webHostingTarget}',
-      '--project', _flavor.firebaseProject!,
-    ], label: 'Deploying Web to Firebase');
+
+    if (_cli.previewChannel != null) {
+      await _runCmd('firebase', [
+        'hosting:channel:deploy', _cli.previewChannel!,
+        '--project', _flavor.firebaseProject!,
+      ], label: 'Deploying Web to Firebase preview: ${_cli.previewChannel}');
+      _log('🔗  Preview URL: https://${_cli.previewChannel}--${_flavor.webHostingTarget}-${_flavor.firebaseProject}.web.app');
+    } else {
+      await _runCmd('firebase', [
+        'deploy',
+        '--only', 'hosting',
+        '--project', _flavor.firebaseProject!,
+      ], label: 'Deploying Web to Firebase');
+    }
   }
 
   // ── Deploy ──
@@ -368,11 +385,12 @@ const String buildVersion = "${_getPubspecVersion()}";
 
   void _printHeader() {
     print('\n══════════════════════════════════════════════');
-    print('  MasterTool Build Tool');
-    print('  Flavor : ${_flavor.name}');
+  print('  NextGen Tools Build Tool');
+  print('  Flavor : ${_flavor.name}');
     print('  Targets: ${_cli.targets.join(', ')}');
     print('  Modes  : ${_cli.modes.join(', ')}');
     print('  Deploy : ${_cli.deploy ? "YES" : "no"}');
+  print('  Preview: ${_cli.previewChannel ?? "—"}');
     print('══════════════════════════════════════════════\n');
   }
 

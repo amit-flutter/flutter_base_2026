@@ -1,8 +1,8 @@
 {
-  "appName": "MasterTool Staging",
+  "appName": "NextGen Tools Staging",
   "baseUrl": "https://staging-api.example.com",
   "sentryDsn": "",
-  "firebaseProjectId": "mastertool-staging",
+  "firebaseProjectId": "next-gen-tools",
   "enableLogging": true,
   "enableCrashReporting": true
 }

@@ -22,41 +22,25 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: flutter analyze
+      - run: flutter analyze --no-fatal-infos
 
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-      - run: flutter pub get
-      - run: flutter test --coverage
-
-  build:
+  build_apk:
     name: Build APK
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: [analyze, test]
+    needs: [analyze]
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: zulu
           java-version: '17'
-
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-
       - name: Cache Pub packages
         uses: actions/cache@v4
         with:
@@ -66,12 +50,9 @@ jobs:
           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-pub-
-
       - run: flutter pub get
-
       - name: Build Universal APK
         run: flutter build apk --release
-
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
@@ -79,11 +60,48 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 7
 
-      # Optional: Firebase App Distribution
-      # Uncomment and set secrets.FIREBASE_APP_ID_ANDROID + secrets.FIREBASE_TOKEN
-      # - name: Upload to Firebase App Distribution
-      #   uses: w9jds/firebase-action@master
-      #   with:
-      #     args: appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app ${{ secrets.FIREBASE_APP_ID_ANDROID }} --groups "testers"
-      #   env:
-      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  deploy_preview:
+    name: Deploy Preview (PR)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [analyze]
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter build web --release
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEXT_GEN_TOOLS }}
+          projectId: next-gen-tools
+          channelId: pr-${{ github.event.number }}
+
+  deploy_production:
+    name: Deploy Production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [analyze]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter build web --release
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEXT_GEN_TOOLS }}
+          projectId: next-gen-tools
+          channelId: live

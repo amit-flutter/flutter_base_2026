@@ -1,6 +1,6 @@
 {
-    "name": "mastertool",
-    "short_name": "mastertool",
+    "name": "NextGen Tools",
+    "short_name": "NextGen Tools",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

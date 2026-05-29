@@ -94,8 +94,8 @@ class FeatureGenerator {
 
   String _remoteDatasource() => '''
 import 'package:dio/dio.dart';
-import 'package:mastertool/core/constants/endpoints.dart';
-import 'package:mastertool/core/utils/logger.dart';
+import 'package:next_gen_tools/core/constants/endpoints.dart';
+import 'package:next_gen_tools/core/utils/logger.dart';
 
 abstract class ${_pascalName}RemoteDataSource {
   // Future<${_pascalName}Dto> get${_pascalName}(String id);
@@ -191,8 +191,8 @@ class $_pascalName with _\$${_pascalName} {
   }
 
   String _repositoryInterface() => '''
-import 'package:mastertool/core/error/result.dart';
-import 'package:mastertool/features/$_name/domain/entities/$_name.dart';
+import 'package:next_gen_tools/core/error/result.dart';
+import 'package:next_gen_tools/features/$_name/domain/entities/$_name.dart';
 
 abstract class ${_pascalName}Repository {
   // Future<Result<$_pascalName>> getById(String id);
@@ -200,13 +200,13 @@ abstract class ${_pascalName}Repository {
 ''';
 
   String _repositoryImpl() => '''
-import 'package:mastertool/core/error/result.dart';
-import 'package:mastertool/core/utils/logger.dart';
-import 'package:mastertool/features/$_name/data/datasources/${_name}_remote_datasource.dart';
-import 'package:mastertool/features/$_name/data/datasources/${_name}_local_datasource.dart';
-import 'package:mastertool/features/$_name/data/models/${_name}_dto.dart';
-import 'package:mastertool/features/$_name/domain/entities/$_name.dart';
-import 'package:mastertool/features/$_name/domain/repositories/${_name}_repository.dart';
+import 'package:next_gen_tools/core/error/result.dart';
+import 'package:next_gen_tools/core/utils/logger.dart';
+import 'package:next_gen_tools/features/$_name/data/datasources/${_name}_remote_datasource.dart';
+import 'package:next_gen_tools/features/$_name/data/datasources/${_name}_local_datasource.dart';
+import 'package:next_gen_tools/features/$_name/data/models/${_name}_dto.dart';
+import 'package:next_gen_tools/features/$_name/domain/entities/$_name.dart';
+import 'package:next_gen_tools/features/$_name/domain/repositories/${_name}_repository.dart';
 
 class ${_pascalName}RepositoryImpl implements ${_pascalName}Repository {
   const ${_pascalName}RepositoryImpl({
@@ -235,9 +235,9 @@ class ${_pascalName}RepositoryImpl implements ${_pascalName}Repository {
 
   String _provider() => '''
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mastertool/core/utils/logger.dart';
-import 'package:mastertool/features/$_name/domain/entities/$_name.dart';
-import 'package:mastertool/features/$_name/domain/repositories/${_name}_repository.dart';
+import 'package:next_gen_tools/core/utils/logger.dart';
+import 'package:next_gen_tools/features/$_name/domain/entities/$_name.dart';
+import 'package:next_gen_tools/features/$_name/domain/repositories/${_name}_repository.dart';
 
 // final ${_name}RepositoryProvider = Provider<${_pascalName}Repository>((ref) {
 //   throw UnimplementedError('Inject repository implementation');
